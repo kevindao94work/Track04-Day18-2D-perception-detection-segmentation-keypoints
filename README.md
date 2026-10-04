@@ -1,6 +1,9 @@
 # Lab 18 — 2D Perception: Detection · Segmentation · Keypoints (Track 4)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VinUni-AI20k/Track04-Day18-2D-perception-detection-segmentation-keypoints/blob/main/lab_2d_perception_student.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kevindao94work/Track04-Day18-2D-perception-detection-segmentation-keypoints/blob/main/lab_2d_perception_student.ipynb)
+
+Notebook đã chạy cùng toàn bộ output: [lab_2d_perception_student.ipynb](lab_2d_perception_student.ipynb).
+Kết quả core, bonus và cả hai homework: [submission/report.md](submission/report.md).
 
 > 🏭 Camera ở cổng nhà máy cần biết: **có bao nhiêu người**, **ai không đội mũ bảo hộ**, và **có ai vừa ngã**.
 > Bạn dùng một model hay ba — và output của mỗi model trông như thế nào?

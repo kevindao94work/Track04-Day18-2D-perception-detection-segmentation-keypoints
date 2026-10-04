@@ -6,6 +6,8 @@ datasets/
 runs/
 runs_lab/
 autolabel/
+!submission/autolabel/
+!submission/autolabel/bus.txt
 tiger-pose-anat.yaml
 tiger-pose-mirror.yaml
 tiger-pose-mirror/
