@@ -1,0 +1,12 @@
+[
+  {
+    "Model": "flip_idx giải phẫu",
+    "Pose mAP50-95 — val gốc": 0.4573462529843696,
+    "Pose mAP50-95 — val lật gương": 0.43884777970456634
+  },
+  {
+    "Model": "flip_idx đồng nhất",
+    "Pose mAP50-95 — val gốc": 0.4169217121481716,
+    "Pose mAP50-95 — val lật gương": 0.29772304416546624
+  }
+]

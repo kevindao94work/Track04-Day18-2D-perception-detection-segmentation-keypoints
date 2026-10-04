@@ -1,0 +1,85 @@
+{
+  "progress": {
+    "average_precision": "ok",
+    "box_iou": "ok",
+    "nms": "ok",
+    "batched_nms": "ok",
+    "mask_iou": "ok",
+    "polygon_to_mask": "ok",
+    "mask_to_yolo_seg": "ok",
+    "autolabel": "ok",
+    "oks": "ok",
+    "joint_angle": "ok",
+    "FLIP_IDX": "ok"
+  },
+  "latency": [
+    {
+      "Cấu hình": "one-to-many + NMS, conf 0.25",
+      "preprocess (ms)": 1.75,
+      "inference (ms)": 9.1,
+      "postprocess (ms)": 1.14,
+      "số box": 5
+    },
+    {
+      "Cấu hình": "one-to-many + NMS, conf 0.001",
+      "preprocess (ms)": 1.72,
+      "inference (ms)": 8.82,
+      "postprocess (ms)": 1.27,
+      "số box": 203
+    },
+    {
+      "Cấu hình": "one-to-one NMS-free, conf 0.25",
+      "preprocess (ms)": 1.75,
+      "inference (ms)": 9.21,
+      "postprocess (ms)": 0.41,
+      "số box": 5
+    },
+    {
+      "Cấu hình": "one-to-one NMS-free, conf 0.001",
+      "preprocess (ms)": 1.68,
+      "inference (ms)": 8.8,
+      "postprocess (ms)": 0.39,
+      "số box": 204
+    }
+  ],
+  "result_4b": {
+    "flip_idx": "giải phẫu",
+    "epochs": 40,
+    "imgsz": 640,
+    "Box mAP50-95": 0.9303488492063492,
+    "Pose mAP50": 0.995,
+    "Pose mAP50-95": 0.4573462529843696,
+    "train (phút)": 4.4
+  },
+  "result_4c": [
+    {
+      "Model": "flip_idx giải phẫu",
+      "Pose mAP50-95 — val gốc": 0.4573462529843696,
+      "Pose mAP50-95 — val lật gương": 0.43884777970456634
+    },
+    {
+      "Model": "flip_idx đồng nhất",
+      "Pose mAP50-95 — val gốc": 0.4169217121481716,
+      "Pose mAP50-95 — val lật gương": 0.29772304416546624
+    }
+  ],
+  "answers": {
+    "Q1": "Với ảnh letterbox 640×480, các mức stride 8, 16 và 32 tạo lần lượt 80×60, 40×30 và 20×15 vị trí, tổng cộng 6300 dự đoán, ít hơn 8400 của ảnh 640×640 vì chiều còn lại chỉ có 60/30/15 thay vì 80/40/20 ô. Nếu đọc cxcywh thành xywh có góc trên-trái là (x,y), tâm thật bị dùng làm góc trên-trái nên box hiển thị dịch sang phải w/2 và xuống dưới h/2.",
+    "Q2": "Trong benchmark T4 (30 lần), postprocess thay đổi rõ nhất giữa hai head: ở conf 0,25, NMS mất 1,14 ms so với 0,41 ms NMS-free; ở conf 0,001 là 1,27 ms so với 0,39 ms. Khi giảm conf, số box tăng từ 5 lên 203/204, còn inference gần như tương đương (8,80–9,21 ms); postprocess NMS tăng 0,13 ms trong khi NMS-free không tăng. Lợi ích của one-to-one rõ hơn ở conf thấp hoặc crowded scene vì tránh xử lý nhiều cặp box trong NMS, dù ảnh bus này chỉ cho chênh lệch dưới 1 ms. Với CPU/NPU hạn chế tài nguyên hoặc NMS chạy ngoài accelerator, loại bỏ bước này có thể giảm chi phí và giúp pipeline ổn định hơn, nhưng cần benchmark trực tiếp trên phần cứng đích.",
+    "Q3": "(a) Hai box cùng class có IoU 0,75 vượt ngưỡng 0,70 nên box có score thấp hơn bị suppress; khác class thì class-aware NMS giữ cả hai. Tăng ngưỡng giữ nhiều box chồng nhau hơn nhưng dễ còn duplicate, còn giảm ngưỡng suppress mạnh hơn và có thể xóa vật thể thật đứng sát nhau. (b) One-to-many tạo nhiều positive assignment và supervision dày hơn trong training, giúp học đặc trưng; one-to-one học phép gán một dự đoán cho mỗi đối tượng để inference không cần NMS.",
+    "Q4": "Semantic cho 8 vùng person dù ảnh có 4 người, trong khi Mask R-CNN nhận đúng 4 instance; nhiều vùng rất nhỏ (3–17 pixel) cho thấy fragmentation có thể đếm thừa. Ngược lại, hai người chạm nhau có thể nối thành một component và bị đếm thiếu; panoptic gán identity riêng cho từng thing nên không chỉ đếm component của class map. Trong box bus, semantic gán 63% pixel thành train, là lỗi dự đoán của pretrained model khi các phương tiện có appearance tương tự, không phải lỗi hàm mask.",
+    "Q5": "Bảng Hungarian có 5 cặp với IoU từ 0,842 đến 0,939: hai cặp person #0 và #1 đạt lần lượt 0,939 và 0,842, còn bus đạt 0,932. Mask R-CNN dùng mask 28×28 cho từng RoI nên biên object lớn có thể bị thô khi upscale, còn YOLO-seg dùng shared prototypes nên object nhỏ chiếm ít spatial cells và dễ mất chi tiết. Independent best match có thể để nhiều YOLO masks chọn cùng một mask Mask R-CNN; Hungarian tối ưu tổng IoU với ràng buộc ghép 1–1. Đây là mức đồng thuận giữa hai pretrained models, không phải accuracy so với ground truth.",
+    "Q6": "Điểm A chọn gần như toàn bộ người mặc áo sáng bên trái và tạo mask 47.441 pixel và IoU 0,99 với mask từ box, nhưng điểm B chọn một vùng nhỏ giữa hai chân và chỉ tạo 2.714 pixel và IoU làm tròn 0,00; một positive point chỉ định region qua tín hiệu cục bộ nên có thể bắt nhầm mảnh. Box prompt cung cấp phạm vi không gian rõ hơn: 5 box cho 5 mask, polygon lưu lại có IoU round-trip 0,967–0,983. Dùng SAM trực tiếp khi cần prompting linh hoạt, segmentation chất lượng cao và chấp nhận latency; với deployment real-time ít tài nguyên, dùng SAM làm teacher tạo nhãn rồi fine-tune YOLO-seg làm student sẽ hợp lý hơn.",
+    "Q7": "Khi hạ KP_THR xuống −100, Keypoint R-CNN vẫn vẽ đầu gối và mắt cá không có trong ảnh thành các điểm dồn sát mép dưới; có cả đoạn chân gần như nằm ngang ở đáy ảnh. Heatmap decoder dùng argmax nên mỗi heatmap vẫn có một cực đại ngay cả khi khớp thật nằm ngoài frame; tọa độ tồn tại không có nghĩa là khớp đáng tin. Ở người 0, logit R-CNN của knee/ankle âm (−3,65 đến −0,97), nên ngưỡng logit 2 loại được các điểm suy đoán này; YOLO cũng cho confidence chân chỉ 0,001–0,002.",
+    "Q8": "Trong đồ thị lấy mẫu bước 2 pixel, OKS của người 40×80 xuống dưới 0,5 lần đầu tại sai số Gauss σ=8 px; người 250×500 vẫn chưa xuống dưới 0,5 ở 30 px, nên chỉ kết luận ngưỡng lớn hơn phạm vi đã đo. Mắt có sigma nhỏ hơn hông vì vị trí thường xác định chính xác hơn và sai lệch nhỏ cần bị phạt mạnh; cùng lệch 8 px trên người 100×200, mắt còn 0,53 nhưng hông còn 0,97. Với camera trên cao và người chỉ cao khoảng 80 px, vài pixel sai đã là tỷ lệ lớn của cơ thể, khiến OKS và keypoint nhỏ giảm mạnh; cần đủ độ phân giải/crop đối tượng, kiểm tra confidence và tránh suy luận chắc chắn từ khớp nhỏ.",
+    "Q9": "Ở ảnh gốc, model phát hiện 5 người nhưng chỉ 2 người có đủ confidence vai/hông để kết luận đứng, với góc thân khoảng 1°. Sau xoay 90°, model chỉ còn phát hiện 3 người và góc thân lần lượt 90°, 94°, 83°, đều vượt ngưỡng 60°. Luật có thể báo nhầm khi người chủ động nằm hoặc cúi nghiêng mạnh, và bỏ sót cú ngã hướng theo trục nhìn khi thân chiếu lên ảnh vẫn gần thẳng đứng hoặc khớp bị che. Đây chỉ là giả lập kiểm tra luật hình học: xoay ảnh làm thay đổi distribution và có thể mất detection, nên không chứng minh hệ thống phát hiện ngã thật đáng tin. Cần kiểm tra độ tin cậy khớp, theo dõi nhiều frame và thêm tín hiệu chuyển động/ngữ cảnh để phân biệt ngã với nằm, cúi hoặc tư thế bình thường.",
+    "Q10": "Tập train có 210 hổ quay phải và 0 quay trái; val cũng có 53 quay phải và 0 quay trái, nên distribution gốc bị lệch hoàn toàn. flip_idx đồng nhất có thể vẫn đạt mAP tốt trên val gốc vì cùng bias hướng nhìn, khiến lỗi ngữ nghĩa trái/phải không được kiểm tra đầy đủ. Khi production có hổ quay trái, ảnh gương hoặc viewpoint đa dạng, mapping sai có thể gán chân trái thành chân phải; vì vậy cần mapping giải phẫu và kiểm tra thêm mirrored val.",
+    "Q11": "Ở Frame_54.jpg (OKS 0,63), hai front_paw dự đoán bị kéo về gần nhau ở giữa hai bàn chân GT đang bước rộng; biểu đồ cũng cho right_front_paw sai số lớn nhất, khoảng 0,26 lần √area. Đây là lỗi định vị theo pha bước: cần hard-example mining những tư thế sải chân, bổ sung ảnh/nhãn đa dạng pha chuyển động và cân nhắc model lớn hơn nếu dữ liệu đủ. Ở Frame_31.jpg (OKS 0,63), các hind_hock/hind_paw dự đoán dồn vào vùng chân sau gần nhau, trong khi chân xa camera bị che một phần và các điểm GT tách rõ hơn; mô hình khó phân biệt limb bị che với limb nhìn thấy. Cần thêm ví dụ occlusion và hướng nhìn trái/phải cân bằng, rà nhãn theo từng limb; đây là dấu hiệu nhầm/ước lượng khớp bị che, không đủ để khẳng định mọi ca đều là left/right swap.",
+    "Q12": "Sigma bằng 1/12 cho mọi khớp là một giả định đơn giản hóa, không chứng minh mức dung sai phù hợp cho từng khớp; nose và tail_base có độ mơ hồ khi gán nhãn khác nhau. Cách ước lượng tốt hơn là thu nhiều annotation độc lập trên cùng ảnh, đo độ phân tán theo khớp, chuẩn hóa theo kích thước đối tượng, tổng hợp robust rồi kiểm tra hành vi metric để tạo vector 12 sigma. Dataset chỉ có một annotation cho mỗi ảnh nên không đo trực tiếp được inter-annotator variability; residual của model chỉ có thể dùng làm proxy và còn chứa lỗi model."
+  },
+  "env": {
+    "device": "cuda",
+    "torch": "2.11.0+cu130",
+    "ultralytics": "8.4.171"
+  }
+}

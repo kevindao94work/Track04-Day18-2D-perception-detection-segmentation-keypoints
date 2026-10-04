@@ -1,0 +1,75 @@
+{
+  "hardware": "Intel(R) Xeon(R) CPU @ 2.00GHz",
+  "logical_cpus": 2,
+  "provider": "CPUExecutionProvider",
+  "ort_version": "1.30.0",
+  "intra_op_threads": 2,
+  "inter_op_threads": 1,
+  "input_size": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "warmup": 10,
+  "iterations": 30,
+  "output_shapes": {
+    "one-to-many": [
+      1,
+      84,
+      8400
+    ],
+    "one-to-one": [
+      1,
+      300,
+      6
+    ]
+  },
+  "export_flags": {
+    "one-to-many": "nms=None (raw)",
+    "one-to-one": "nms=False (end-to-end)"
+  },
+  "postprocess": "Student class-aware greedy NMS at IoU 0.7 for one-to-many; score filtering and coordinate scaling for one-to-one",
+  "rows": [
+    {
+      "head": "one-to-many",
+      "confidence": 0.25,
+      "preprocess_ms": 4.932076733340788,
+      "inference_ms": 76.80681036666404,
+      "postprocess_ms": 5.3963022666494,
+      "total_ms": 87.13518936665423,
+      "boxes": 5,
+      "iterations": 30
+    },
+    {
+      "head": "one-to-many",
+      "confidence": 0.001,
+      "preprocess_ms": 5.526224866662233,
+      "inference_ms": 114.98722070001956,
+      "postprocess_ms": 75.67820833333674,
+      "total_ms": 196.19165390001854,
+      "boxes": 186,
+      "iterations": 30
+    },
+    {
+      "head": "one-to-one",
+      "confidence": 0.25,
+      "preprocess_ms": 3.9139565999827632,
+      "inference_ms": 65.40360806667802,
+      "postprocess_ms": 0.5103969666834018,
+      "total_ms": 69.82796163334417,
+      "boxes": 5,
+      "iterations": 30
+    },
+    {
+      "head": "one-to-one",
+      "confidence": 0.001,
+      "preprocess_ms": 3.9408727666720247,
+      "inference_ms": 68.60046550000334,
+      "postprocess_ms": 0.5329222000076091,
+      "total_ms": 73.07426046668297,
+      "boxes": 177,
+      "iterations": 30
+    }
+  ]
+}

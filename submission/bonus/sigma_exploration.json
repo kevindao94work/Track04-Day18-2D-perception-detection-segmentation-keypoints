@@ -1,0 +1,23 @@
+{
+  "equal_sigma": 0.08333333333333333,
+  "proxy_sigmas": [
+    0.01486124326721608,
+    0.013172578057697958,
+    0.013260203893711292,
+    0.013070030280927052,
+    0.048800865723379196,
+    0.0733856211949267,
+    0.11369163787245476,
+    0.07483291639598882,
+    0.025172009536872358,
+    0.13284182096996847,
+    0.030753826646330744,
+    0.08896913804711962
+  ],
+  "equal_pose_map50": 0.995,
+  "equal_pose_map50_95": 0.4573462529843696,
+  "proxy_pose_map50": 0.2498697112560811,
+  "proxy_pose_map50_95": 0.05198937811718148,
+  "method": "MAD of normalized validation prediction residuals; 2*sigma equals robust coordinate dispersion",
+  "limitation": "Computed and evaluated on same validation images; exploratory and not independent calibration. Model residual mixes bias, localization error and annotation uncertainty. True OKS sigmas require repeated independent annotations."
+}

@@ -1,0 +1,276 @@
+{
+  "result": {
+    "source": "Ultralytics coco128 subset of MS COCO 2017",
+    "source_url": "https://cocodataset.org/#termsofuse",
+    "images": 25,
+    "target_class": "person",
+    "labels": 64,
+    "polygon_corrections": 5,
+    "polygon_correction_attempts": 8,
+    "manual_prompt_corrections": 2,
+    "flagged_instances": 4,
+    "train_images": 20,
+    "val_images": 5,
+    "epochs": 15,
+    "imgsz": 640,
+    "mask_map50": 0.37014704529277986,
+    "mask_map50_95": 0.21969598482878644,
+    "limitation": "Validation uses SAM pseudo-labels, not independently corrected ground truth; small sample and detector selection bias."
+  },
+  "manifest": [
+    {
+      "image": "000000000036.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 36
+    },
+    {
+      "image": "000000000061.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 61
+    },
+    {
+      "image": "000000000077.jpg",
+      "split": "train",
+      "labels": 3,
+      "coco_image_id": 77
+    },
+    {
+      "image": "000000000109.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 109
+    },
+    {
+      "image": "000000000110.jpg",
+      "split": "val",
+      "labels": 5,
+      "coco_image_id": 110
+    },
+    {
+      "image": "000000000113.jpg",
+      "split": "train",
+      "labels": 3,
+      "coco_image_id": 113
+    },
+    {
+      "image": "000000000136.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 136
+    },
+    {
+      "image": "000000000165.jpg",
+      "split": "train",
+      "labels": 2,
+      "coco_image_id": 165
+    },
+    {
+      "image": "000000000192.jpg",
+      "split": "train",
+      "labels": 4,
+      "coco_image_id": 192
+    },
+    {
+      "image": "000000000241.jpg",
+      "split": "train",
+      "labels": 3,
+      "coco_image_id": 241
+    },
+    {
+      "image": "000000000257.jpg",
+      "split": "val",
+      "labels": 5,
+      "coco_image_id": 257
+    },
+    {
+      "image": "000000000260.jpg",
+      "split": "val",
+      "labels": 1,
+      "coco_image_id": 260
+    },
+    {
+      "image": "000000000294.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 294
+    },
+    {
+      "image": "000000000315.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 315
+    },
+    {
+      "image": "000000000322.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 322
+    },
+    {
+      "image": "000000000326.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 326
+    },
+    {
+      "image": "000000000328.jpg",
+      "split": "train",
+      "labels": 3,
+      "coco_image_id": 328
+    },
+    {
+      "image": "000000000338.jpg",
+      "split": "train",
+      "labels": 2,
+      "coco_image_id": 338
+    },
+    {
+      "image": "000000000357.jpg",
+      "split": "train",
+      "labels": 5,
+      "coco_image_id": 357
+    },
+    {
+      "image": "000000000360.jpg",
+      "split": "val",
+      "labels": 1,
+      "coco_image_id": 360
+    },
+    {
+      "image": "000000000368.jpg",
+      "split": "train",
+      "labels": 6,
+      "coco_image_id": 368
+    },
+    {
+      "image": "000000000370.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 370
+    },
+    {
+      "image": "000000000382.jpg",
+      "split": "train",
+      "labels": 1,
+      "coco_image_id": 382
+    },
+    {
+      "image": "000000000389.jpg",
+      "split": "train",
+      "labels": 7,
+      "coco_image_id": 389
+    },
+    {
+      "image": "000000000395.jpg",
+      "split": "val",
+      "labels": 4,
+      "coco_image_id": 395
+    }
+  ],
+  "qa": [
+    {
+      "image": "000000000049.jpg",
+      "instance": 1,
+      "action": "reject",
+      "reasons": [
+        "low_roundtrip_iou"
+      ]
+    },
+    {
+      "image": "000000000086.jpg",
+      "instance": 0,
+      "action": "correct_polygon",
+      "before": 0.6481982469558716,
+      "after": 0.6554882526397705
+    },
+    {
+      "image": "000000000086.jpg",
+      "instance": 0,
+      "action": "reject",
+      "reasons": [
+        "low_roundtrip_iou"
+      ]
+    },
+    {
+      "image": "000000000201.jpg",
+      "instance": 0,
+      "action": "reject",
+      "reasons": [
+        "tiny"
+      ]
+    },
+    {
+      "image": "000000000260.jpg",
+      "instance": 0,
+      "action": "correct_polygon",
+      "before": 0.9365879893302917,
+      "after": 0.9455105066299438
+    },
+    {
+      "image": "000000000308.jpg",
+      "instance": 1,
+      "action": "correct_polygon",
+      "before": 0.949053168296814,
+      "after": 0.9664784669876099
+    },
+    {
+      "image": "000000000308.jpg",
+      "instance": 4,
+      "action": "correct_polygon",
+      "before": 0.8161742687225342,
+      "after": 0.8317278623580933
+    },
+    {
+      "image": "000000000308.jpg",
+      "instance": 4,
+      "action": "reject",
+      "reasons": [
+        "low_roundtrip_iou"
+      ]
+    },
+    {
+      "image": "000000000326.jpg",
+      "instance": 0,
+      "action": "correct_polygon",
+      "before": 0.9063205718994141,
+      "after": 0.9169319272041321
+    },
+    {
+      "image": "000000000328.jpg",
+      "instance": 1,
+      "action": "correct_polygon",
+      "before": 0.9466449022293091,
+      "after": 0.9836784601211548
+    },
+    {
+      "image": "000000000368.jpg",
+      "instance": 0,
+      "action": "correct_polygon",
+      "before": 0.933694064617157,
+      "after": 0.9708202481269836
+    },
+    {
+      "image": "000000000370.jpg",
+      "instance": 0,
+      "action": "correct_polygon",
+      "before": 0.9472501277923584,
+      "after": 0.9732107520103455
+    },
+    {
+      "image": "000000000326.jpg",
+      "instance": 0,
+      "action": "correct_prompt",
+      "reason": "recover extended hand, exclude wine glass",
+      "roundtrip": 0.994651198387146
+    },
+    {
+      "image": "000000000370.jpg",
+      "instance": 0,
+      "action": "correct_prompt",
+      "reason": "exclude broccoli while retaining child and hand",
+      "roundtrip": 0.9857980012893677
+    }
+  ]
+}
